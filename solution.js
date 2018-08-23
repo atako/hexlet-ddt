@@ -1,16 +1,22 @@
-import { cons, car, cdr, toString as pairToString } from 'hexlet-pairs'; // eslint-disable-line
+import { cons, car, toString as pairToString } from 'hexlet-pairs'; // eslint-disable-line
 import { cons as consList, l, random, head, reverse, toString as listToString } from 'hexlet-pairs-data'; // eslint-disable-line
+import { getName as getSimpleCardName, damage as simpleCardDamage } from './simpleCard';
+import { getName as getPercentCardName, damage as percentCardDamage } from './percentCard';
+import { typeTag } from './type';
+
+const isSimpleCard = card => typeTag(card) === 'SimpleCard';
+const isPercentCard = card => typeTag(card) === 'PercentCard';
 
 const run = (player1, player2, cards, customRandom) => {
   const iter = (health1, name1, health2, name2, order, log) => {
-    if (health1 <= 0) {
+    // BEGIN (write your solution here)
+    if (health1 <= 0){
       return consList(cons(car(head(log)), `${name1} был убит`), log);
     }
-    // BEGIN (write your solution here)
+
     const card = customRandom(cards);
-    // END
-    const cardName = car(card);
-    const damage = cdr(card)(health2);
+    const cardName = isSimpleCard ? getSimpleCardName(card) : getPercentCardName(card);
+    const damage = isSimpleCard(card) ? simpleCardDamage(card) : percentCardDamage(card, health2);  
     const newHealth = health2 - damage;
 
     const message = `Игрок '${name1}' применил '${cardName}'
@@ -23,6 +29,9 @@ const run = (player1, player2, cards, customRandom) => {
     }
     const newLog = consList(stats, log);
     return iter(newHealth, name2, health1, name1, order === 1 ? 2 : 1, newLog);
+    // console.log(isSimpleCard(card));
+
+    // END
   };
 
   const startHealth = 10;
@@ -30,9 +39,6 @@ const run = (player1, player2, cards, customRandom) => {
   return reverse(iter(startHealth, player1, startHealth, player2, 1, l(logItem)));
 };
 
-// BEGIN (write your solution here)
-export default (cards, func = random) => {
-  const launch = (name1, name2) => run(name1, name2, cards, func);
-  return launch;
-}
-// END
+export default (cards, customRandom = random) =>
+  (name1, name2) =>
+    run(name1, name2, cards, customRandom);
