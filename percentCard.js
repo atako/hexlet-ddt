@@ -1,10 +1,13 @@
-import { cons, car, cdr } from 'hexlet-pairs';
-import { attach, contents } from './type';
+const make = (name, percent) =>
+  (message, health) => {
+    switch (message) {
+      case 'getName':
+        return name;
+      case 'damage':
+        return Math.round(health * (percent / 100));
+      default:
+        return 'undefined method';
+    }
+  };
 
-export const make = (name, percent) =>
-  attach('PercentCard', cons(name, percent));
-
-export const getName = self => car(contents(self));
-
-export const damage = (self, health) =>
-  Math.round(health * (cdr(contents(self)) / 100));
+export default make;

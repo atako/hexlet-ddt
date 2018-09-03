@@ -1,9 +1,16 @@
-import { cons, car, cdr, toString as pairToString } from 'hexlet-pairs'; // eslint-disable-line
-import { attach, contents } from './type';
-
 // BEGIN (write your solution here)
-export const make = (name, damage) => attach('SimpleCard', cons(name, damage));
-export const getName = self => car(contents(self));
-export const damage = self => cdr(contents(self));
+const make = (name, damage) => 
+  (message, health) => {
+    switch (message) {
+      case "getName":
+        return name;
+      case "damage":
+        return damage
+      default: 
+        return "undefined method"
+    }
+  }
+
+export default make;
 
 // END
