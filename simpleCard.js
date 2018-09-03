@@ -1,8 +1,12 @@
-// BEGIN (write your solution here)
-const make = (name, damage) => ({
-  name,
-  damage: () => damage
-})
+// BEGIN
+export default class SimpleCard {
+  constructor(name, damagePoints) {
+    this.name = name;
+    this.damagePoints = damagePoints;
+  }
 
-export default make;
+  damage() {
+    return this.damagePoints;
+  }
+}
 // END

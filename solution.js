@@ -1,7 +1,6 @@
 import { cons as consList, l, random, head, reverse, toString as listToString } from 'hexlet-pairs-data'; // eslint-disable-line
 
 const run = (player1, player2, cards, customRandom) => {
-  // BEGIN (write your solution here)
   const iter = (health1, name1, health2, name2, order, log) => {
     if (health1 <= 0) {
       const prevLog = head(log);
@@ -30,7 +29,6 @@ const run = (player1, player2, cards, customRandom) => {
     const newLog = consList(stats, log);
     return iter(newHealth, name2, health1, name1, order === 1 ? 2 : 1, newLog);
   };
-  // END
 
   const startHealth = 10;
   const logItem = {
